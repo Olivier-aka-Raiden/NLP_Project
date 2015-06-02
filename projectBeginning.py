@@ -28,16 +28,26 @@ class DblNegatives(object):
     def isDblNegatives(self,sentence):
         neg = 0
         tokens = word_tokenize(sentence)
-        #check the amount of negative meaning words
+        # check the number of negative meaning words
         for t in tokens:
-            if len(t)>1:
-                if t.lower() in NEGATIVE:
-                    neg = neg+1
-        if neg == 2:
-            print("this is a sentence with a double negative.")
+            if t.lower() in NEGATIVE or t.lower() in NEGATIVE_WORDS:
+                #print 'FOUND A NEGATIVE WORD, IT WAS:', t
+                neg = neg + 1
+        if neg % 2 == 0:
+            print("This is a sentence with a double negative.")
             return True
         else:
             return False
+
+        
+    # check for the first case
+    def is_negative_word_sentence(self, sent):
+        sent = word_tokenize(sent)
+        for word in sent:
+            if word.lower() in NEGATIVE_WORDS:
+                return True
+        return False
+    
     #first case when there is negative word such as Hardly etc.
     def correctSent1(self,sent):
         sent = word_tokenize(sent)
@@ -54,7 +64,17 @@ class DblNegatives(object):
                 new_sent.append(word)          
         new_sent = ' '.join(new_sent)
         print (new_sent+"\n")
+        
     #TODO : second case
+
+    # check for third case
+    def is_bad_grammar_sentence(self, sent):
+        sent = word_tokenize(sent)
+        for word in sent:
+            if word.lower() in BAD_GRAMMAR:
+                return True
+        return False
+    
     #third case with bad grammar:
         #this one should be improve in order to get better result but it works for the example sentence
     def correctSent2(self,sent):
@@ -74,29 +94,25 @@ class DblNegatives(object):
                     new_sent.append(word)
         new_sent = ' '.join(new_sent)
         print (new_sent)
+        
 def main():
     #To do:
     #change the program to deal with a list of sentences from a .txt file
+    sentences = [line.rstrip('\n') for line in open('sentences.txt')]
     #create 3 fonctions one for each situation 1: negative words 2: prefixes 3:bad grammar
-    #change the current list of words into dictionary or more suitable data type.
-
-    #this is an idea of what will be the result for one sentence.
-    sentence = "We never heard nothing like that."
-    sentence2 = "I couldn't hardly wait to get to the party."
+    #change the current list of words into dictionary or more suitable data type   dn = DblNegatives()
     dn = DblNegatives()
-    print (sentence2)
-    if (dn.isDblNegatives(sentence)):
-        print("The modified sentence is : ")
-        dn.correctSent1(sentence2)
-    else:
-        print("Bye")
-    
-    print(sentence)
-    if (dn.isDblNegatives(sentence)):
-        print("The modified sentence is : ")
-        dn.correctSent2(sentence)
-    else:
-        print("Bye")
-
+    for sentence in sentences:
+        print ('The sentence is:', sentence)
+        if (dn.isDblNegatives(sentence)):
+            print("The modified sentence is: ")
+            if dn.is_negative_word_sentence(sentence):
+                dn.correctSent1(sentence)
+            elif dn.is_bad_grammar_sentence(sentence):
+                dn.correctSent2(sentence)
+            print()
+        else:
+            print ('This sentence does not contain a double negative.')
+            print()
 if __name__ == '__main__':
     main()
