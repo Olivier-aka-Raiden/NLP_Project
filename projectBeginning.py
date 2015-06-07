@@ -4,6 +4,7 @@ from collections import Counter
 from nltk import word_tokenize
 import re
 from nltk.corpus import wordnet as wn
+from sys import version_info
 
 #/!\Notice : I wrote this program with python 3.4.1 so don't be surprised if print makes errors in your compiler.
 
@@ -84,9 +85,12 @@ class DblNegatives(object):
         #use tags to spot good words to change
         for (word,tag) in tagged:
             if len(word)>1:
+                if word == 'wo':
+                    word = 'will'
                 if word == 'n\'t':
                     word = 'not'
-                if tag == 'NN' and word in BAD_GRAMMAR:
+                print(tag)
+                if tag == 'NN' or tag == 'DT' and word in BAD_GRAMMAR:
                     new_sent.append (self.change(word))
                 else:
                     new_sent.append(word)
@@ -113,6 +117,39 @@ def main():
             print()
         else:
             print ('This sentence does not contain a double negative.')
+            print()
+
+    # take in user input of sentences
+    sent = ""
+    py3 = version_info[0] > 2 #creates boolean value for test that Python major version > 2
+
+    while(True):
+        if py3:
+            sent = input("Enter a sentence (\"quit\" to exit the program): ")
+            if (sent == "quit"):
+                break;
+            print ('The sentence is:', sent)
+            if (dn.isDblNegatives(sent)):
+                print("The modified sentence is: ")
+                if dn.is_negative_word_sentence(sent):
+                    dn.correctSent1(sent)
+                elif dn.is_bad_grammar_sentence(sent):
+                    dn.correctSent2(sent)
+                print()
+            else:
+                print ('This sentence does not contain a double negative.')
+            print()
+        else:
+            sent = raw_input("Enter a sentence (\"quit\" to exit the program): ")
+            if (sent == "quit"):
+                break;
+            print ('The sentence is:', sent)
+            if (dn.isDblNegatives(sent)):
+                print("The modified sentence is: ")
+                if dn.is_negative_word_sentence(sent):
+                    dn.correctSent1(sent)
+                elif dn.is_bad_grammar_sentence(sent):
+                    dn.correctSent2(sent)
             print()
 if __name__ == '__main__':
     main()
