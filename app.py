@@ -2,7 +2,7 @@ from __future__ import division
 from nltk import word_tokenize
 from nltk.corpus import wordnet as wn
 from sys import version_info
-import nltk, re, pprint
+import nltk, re, pprint, sys, getopt
 
 #/!\Notice : Program written with python 3.4.1; print may have errors
 
@@ -31,8 +31,8 @@ class DblNegatives(object):
         tokens = word_tokenize(sentence)
         # check the number of negative meaning words
         for t in tokens:
-            if (t.lower() in NEGATIVE) or (t.lower() in NEGATIVE_WORDS) or (t.lower() in NEGATIVE_PREFIXES):
-                #print ('FOUND A NEGATIVE WORD, IT WAS:', t)
+            if t.lower() in NEGATIVE or t.lower() in NEGATIVE_WORDS or t.lower() in NEGATIVE_PREFIXES:
+                #print 'FOUND A NEGATIVE WORD, IT WAS:', t
                 neg_count += 1
         if neg_count > 1 and neg_count % 2 == 0:
             print("This is a sentence with a double negative.")
@@ -45,7 +45,8 @@ class DblNegatives(object):
         sent = word_tokenize(sent)
         for word in sent:
             if word.lower() in NEGATIVE_WORDS:
-                print ('This sentence is a negative word sentence.')
+                print ("This sentence is a negative word sentence.\n")
+                print ("The modified sentence is: ")
                 return True
         return False
 
@@ -75,7 +76,8 @@ class DblNegatives(object):
         sent = word_tokenize(sent)
         for word in sent:
             if word.lower() in NEGATIVE_PREFIXES:
-                print ('This sentence is a negative prefix sentence.')
+                print ("This sentence is a negative prefix sentence.\n")
+                print ("The modified sentence is: ")
                 return True
         return False
 
@@ -85,7 +87,6 @@ class DblNegatives(object):
         new_sent = []
         for word in sent:
             pass
-        #print (new_sent+"\n")
 
 
     # check if it is a double negative sentence using bad grammar
@@ -93,7 +94,8 @@ class DblNegatives(object):
         sent = word_tokenize(sent)
         for word in sent:
             if word.lower() in BAD_GRAMMAR:
-                print ('This sentence is a bad grammar sentence.')
+                print ("This sentence is a bad grammar sentence.\n")
+                print ("The modified sentence is: ")
                 return True
         return False
 
@@ -140,45 +142,78 @@ class DblNegatives(object):
     def process_sentence(self, sentence):
         print ('The sentence is:', sentence)
         if (self.contains_double_negative(sentence)):
-            print("The modified sentence is: ")
+
             if self.is_negative_word_sentence(sentence):
                 self.correct_negative_word_sentence(sentence)
+
             elif self.is_negative_prefix_sentence(sentence):
                 self.correct_negative_prefix_sentence(sentence)
+
             elif self.is_bad_grammar_sentence(sentence):
                 self.correct_bad_grammar_sentence(sentence)
         else:
-            print ('This sentence does not contain a double negative.'+"\n")
+            print ('This sentence does not contain a double negative.')
 
 
-def main():
-    dn = DblNegatives()
+def main(argv):
     print('*/----------------------------------------------------------------*/')
     print('*/CS372 NLP project: Double negatives')
     print('*/objective: correcting sentences with double negative to make')
     print('*/easier to understand.')
     print('*/----------------------------------------------------------------*/')
           
-    # read test sentences from a text file
-    sentences = [line.rstrip('\n') for line in open('sentences.txt')]
-    for sentence in sentences:
-        dn.process_sentence(sentence)
+    dn = DblNegatives()
 
-    # take in user input of sentences
-    sent = ""
-    py3 = version_info[0] > 2 #creates boolean value for test that Python major version > 2
+    score = 0
+    total_score = 0
+    num_scored = 0
 
-    while(True):
-        if py3:
-            sent = input("Enter a sentence (\"quit\" to exit the program): ")
-            if (sent == "quit"):
-                break;
-            dn.process_sentence(sent)
-        else:
-            sent = raw_input("Enter a sentence (\"quit\" to exit the program): ")
-            if (sent == "quit"):
-                break;
-            dn.process_sentence(sent)
+    # get user's command line arguments
+    try:
+        opts, args = getopt.getopt(argv, "hti")
+    except getopt.GetoptError:
+        print ('usage: app.py -t')
+        print ('usage: app.py -i')
+        sys.exit(2)
+
+    for opt, arg in opts:
+        # print usage
+        if opt == '-h':
+            print ('usage: app.py -t')
+            print ('usage: app.py -i')
+            sys.exit()
+
+        # read test sentences from a text file
+        elif opt == "-t":
+            sentences = [line.rstrip('\n') for line in open('sentences.txt')]
+            for sentence in sentences:
+                dn.process_sentence(sentence)
+
+        # take in user input of sentences
+        elif opt == "-i":
+            sent = ""
+            py3 = version_info[0] > 2 #creates boolean value for test that Python major version > 2
+
+            while(True):
+                if py3:
+                    sent = input("Enter a sentence (\"quit\" to exit the program): ")
+                    if (sent == "quit"):
+                        break;
+                    dn.process_sentence(sent)
+                    score = input("Enter the score for the correction: ")
+                    total_score += score
+                    num_scored += 1
+                    print ('The average score of the program is:', total_score / num_scored)
+                else:
+                    sent = raw_input("Enter a sentence (\"quit\" to exit the program): ")
+                    if (sent == "quit"):
+                        break;
+                    dn.process_sentence(sent)
+                    score = input("Enter the score for the correction: ")
+                    total_score += score
+                    num_scored += 1
+                    print ('The average score of the program is:', total_score / num_scored)
+
 
 if __name__ == '__main__':
-    main()
+    main(sys.argv[1:])
