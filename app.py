@@ -6,24 +6,29 @@ import nltk, re, pprint, sys, getopt
 
 #/!\Notice : Program written with python 3.4.1; print may have errors
 
-#list of words for double negatives using negative words
+# list of words for double negatives using negative words
 NEGATIVE_WORDS = set(['hardly', 'seldom', 'scarcely', 'barely', 'rarely'])
-#list of common negative words
+# list of common negative words
 ## NOTE: Can change this to a lookup table... didn't --> did and n't (or not)
-NEGATIVE = set(['not','n\'t','nothing','nobody','never','no'])
-#list of words for double negatives using prefixes
-NEGATIVE_PREFIXES = set()
-#list of words for double negatives using bad grammar
+NEGATIVE = set(['not','n\'t','nothing','nobody','never','no','none'])
+# list of negative prefixes
+NEGATIVE_PREFIXES = set(['in', 'un', 'im', 'non', 'ir', 'il'])
+# list of words for double negatives using prefixes
+NEGATIVE_PREFIX_WORDS = set()
+# list of words for double negatives using bad grammar
 BAD_GRAMMAR = set(['nothing','never','no','ai','not'])
 
 # populate the negative prefixes set
 wordlist = [w for w in nltk.corpus.words.words('en') if w.islower()]
-for w in [w for w in wordlist if re.search('^(in|un|im|non|ir).+', w)]:
-    NEGATIVE_PREFIXES.add(w)
+for w in [w for w in wordlist if re.search('^(in|un|im|non|ir|il)', w)]:
+    NEGATIVE_PREFIX_WORDS.add(w)
+    # note: DO SET DIFFERENCE FOR WORDS LIKE 'in', 'understand'
+
+to_remove = ['in', 'under', 'understand', 'ill', 'none']
+for word in to_remove:
+    NEGATIVE_PREFIX_WORDS.remove(word)
 
 class DblNegatives(object):
-    def __init__(self):
-        pass
 
     # check if the sentence contains a double negative
     def contains_double_negative(self, sentence):
@@ -31,7 +36,7 @@ class DblNegatives(object):
         tokens = word_tokenize(sentence)
         # check the number of negative meaning words
         for t in tokens:
-            if t.lower() in NEGATIVE or t.lower() in NEGATIVE_WORDS or t.lower() in NEGATIVE_PREFIXES:
+            if t.lower() in NEGATIVE or t.lower() in NEGATIVE_WORDS or t.lower() in NEGATIVE_PREFIX_WORDS:
                 #print 'FOUND A NEGATIVE WORD, IT WAS:', t
                 neg_count += 1
         if neg_count > 1 and neg_count % 2 == 0:
@@ -75,7 +80,7 @@ class DblNegatives(object):
     def is_negative_prefix_sentence(self, sent):
         sent = word_tokenize(sent)
         for word in sent:
-            if word.lower() in NEGATIVE_PREFIXES:
+            if word.lower() in NEGATIVE_PREFIX_WORDS:
                 print ("This sentence is a negative prefix sentence.\n")
                 print ("The modified sentence is: ")
                 return True
@@ -86,7 +91,17 @@ class DblNegatives(object):
         sent = word_tokenize(sent)
         new_sent = []
         for word in sent:
-            pass
+            if word.lower() not in NEGATIVE_PREFIX_WORDS and word.lower() not in NEGATIVE:
+                new_sent.append(word)
+            # remove the negative prefix
+            else:
+                for prefix in NEGATIVE_PREFIXES:
+                    if prefix in word:
+                        word = word[len(prefix):]
+                        new_sent.append(word)
+                        break
+        new_sent = ' '.join(new_sent)
+        print (new_sent+"\n")
 
 
     # check if it is a double negative sentence using bad grammar
