@@ -10,13 +10,13 @@ import nltk, re, pprint, sys, getopt
 NEGATIVE_WORDS = set(['hardly', 'seldom', 'scarcely', 'barely', 'rarely'])
 # list of common negative words
 ## NOTE: Can change this to a lookup table... didn't --> did and n't (or not)
-NEGATIVE = set(['not','n\'t','nothing','nobody','never','no','none'])
+NEGATIVE = set(['not','n\'t','nothing','nobody','never','no','none','neither','nowhere'])
 # list of negative prefixes
 NEGATIVE_PREFIXES = set(['in', 'un', 'im', 'non', 'ir', 'il'])
 # list of words for double negatives using prefixes
 NEGATIVE_PREFIX_WORDS = set()
 # list of words for double negatives using bad grammar
-BAD_GRAMMAR = set(['nothing','never','no','ai','not'])
+BAD_GRAMMAR = set(['nothing','never','no','ai','not','neither','nowhere','none','nobody'])
 
 # populate the negative prefixes set
 wordlist = [w for w in nltk.corpus.words.words('en') if w.islower()]
@@ -124,6 +124,16 @@ class DblNegatives(object):
             return 'any'
         elif word == 'not':
             return ''
+        elif word == 'nowhere':
+            return 'anywhere'
+        elif word == 'neither':
+            return 'either'
+        elif word == 'none':
+            return 'none'
+        elif word == 'nobody':
+            return 'anybody'
+        else:
+            return word
 
     # correct the double negative sentence using bad grammar
     def correct_bad_grammar_sentence(self, sent):
@@ -131,20 +141,28 @@ class DblNegatives(object):
         tagged = nltk.pos_tag(tokens)
         modification = 0
         new_sent = []
+        excp=0
         #use tags to spot good words to change
         for (word,tag) in tagged:
             if len(word)>1:
                 if word == 'wo':
                     word = 'will'
                 if word == 'ai':
-                    word = 'don\'t'
+                    word = 'didn\'t'
+                    excp = 1
                 if word == 'ca':
                     word = 'can'
+                if word == 'got' and excp == 1:
+                    word == 'get'
                 if word == 'n\'t':
                     word = 'not'
                 if (tag == 'NN' or tag == 'DT' or tag == 'RB') and (word in BAD_GRAMMAR) and modification == 0:
-                    new_sent.append (self.change_bad_grammar(word))
-                    modification = 1
+                    if (word != 'never'):
+                        new_sent.append (self.change_bad_grammar(word.lower()))
+                        if excp == 0:
+                            modification = 1
+                    else:
+                         new_sent.append (word)
                 else:
                     new_sent.append(word)
             else:
