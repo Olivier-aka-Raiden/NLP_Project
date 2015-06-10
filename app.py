@@ -195,7 +195,7 @@ class DblNegatives(object):
                 if word == 'ca':
                     word = 'can'
                 if word == 'got' and excp == 1:
-                    word == 'get'
+                    word = 'get'
                 if word == 'n\'t':
                     word = 'not'
                 if (tag == 'NN' or tag == 'DT' or tag == 'RB') and (word in BAD_GRAMMAR) and modification == 0:
