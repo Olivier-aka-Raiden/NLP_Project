@@ -1,30 +1,73 @@
-I can't barely see where I am going in this fog.
-She did not barely understand the instructions.
-I hardly have no money.
-I couldn't hardly wait to get to the party.
-It wasn't hardly midnight when we saw the meteor shower.
-He is not rarely a visitor at the park.
-Tom wasn't rarely present at openings.
-The news of the company's bankruptcy made scarcely no impact.
-The Southeast had scarcely no rain last year.
-We don't watch movies seldom.
-Tom doesn't go there seldom since his bad experience.
-The evidence is certainly not irrefutable.
-This gem is not uncommon.
-The results are not inconclusive.
-His rebuttal was clearly not nonsensical.
-The price of the car is not insignificant.
-It is not unnecessary to tell the truth all the time.
-The new disease wasn't non-infectious.
-He wasn't irresponsible about his duties.
-We never heard nothing like that.
-That won't do you no good.
-I ain't got no time for supper.
-Nobody with any sense isn't going.
-I can't find my keys nowhere.
-she never goes with nobody.
-John says he has not seen neither Alice or Susan all day.
-You can't see no one in this crowd.
-There aren't no presents left open.
-The secret cave did not have none of the treasures they wanted.
-We haven't never seen a tornado that big
+Nobody with any sense is not going. 3
+The secret cave did not have none of the treasures they wanted. 3
+You should not do nothing to the house. 3
+I cannot barely see where I am going in this fog. 3
+I hardly have no money. 3
+It wasn't hardly midnight when we saw the meteor shower. 3
+He is not rarely a visitor at the park. 3
+Tom was not rarely present at openings. 3
+The news of the company's bankruptcy made scarcely no impact. 3
+The Southeast had scarcely no rain last year. 3
+We seldom do not watch movies. 3
+She did not barely understand the instructions. 2
+Tom seldom does not go there since his bad experience. 2
+The researcher decided to run the test again because the results from previous tests weren't hardly reliable. 3
+Arizona had scarcely no rain last summer. 3
+He couldn't hardly catch his breath. 3
+The first satirical TV comedy made scarcely no impact. 3
+There is hardly no worse challenge than the one concerning national defense. 3
+The storm rose so quickly that the road crews could not do nothing about clearing the highways. 2
+I never was nor never will be. 2
+The evidence is certainly not irrefutable. 3
+This gem is not uncommon. 3
+The results are not inconclusive. 3
+His rebuttal was clearly not nonsensical. 3
+The price of the car is not insignificant. 3
+It is not unnecessary to tell the truth all the time. 3
+The new disease was not noninfectious. 3
+He was not irresponsible about his duties. 3
+It wasn't uninteresting. 3
+She is not unattractive. 3
+He was not illogical. 3
+Blake was not unaware of his appearance. 3
+Ain't nobody has time for that. 3
+That will not do you no good. 2
+You cannot see no one in this crowd. 2
+I ain't got no time for supper. 2
+All the witnesses claimed that they did not see nothing. 3
+She never goes with nobody. 3
+The pilot cannot find no place to land. 2
+We have not never seen a tornado that big. 3
+I do not have nobody to mow my lawn. 3
+That attitude won't get you nowhere. 3
+I can't get no sleep. 2
+I never wanted nothing more. 3
+I didn't see nothing. 3
+There were times I was so nervous I couldn't hardly see straight. 3
+I'm losing weight and I can't hardly think. 3
+The explorers finally discovered that the place where they landed did not have none of the minerals they wanted. 3
+I don't know nothing about double negatives. 3
+It won't do you no good. 3
+They'll never make no money. 3
+I don't like to eat cheesecake. 3
+There is no way you can do nothing about this. 2
+My favorite book series is Harry Potter. 3
+I like drinking water in the morning and at night. 3
+Do you not like to eat biscuits? 3
+Harry Potter is the best book series ever! 3
+He doesn't like pasta. 3
+She's not tired. 3
+I could hear nothing at all. 3
+We've never been to Germany. 3
+Nobody would tell her the truth. 3
+There was nowhere for the kids to play. 3
+Neither of them spoke Japanese. 3
+I don't know anything about computers. 3
+I know nothing about computers. 3
+Joshua did not think that studying music was a good way to spend his time. 3
+Mrs. Sullivan didn't think the boys would finish on time. 3
+She was not very often kind. 3
+I didn't want to regret not going. 1
+I couldn't not help him. 2
+We can't just do nothing in the face of this mounting threat. 2
+When I look back, I don't regret not going to school. 2

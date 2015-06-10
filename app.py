@@ -278,7 +278,7 @@ def main(argv):
                     if (sent == "quit"):
                         break;
                     dn.process_sentence(sent)
-                    score = input("Enter the score for the correction: ")
+                    score = int (input("Enter the score for the correction: "))
                     total_score += score
                     num_scored += 1
                     print ('The average score of the program is:', total_score / num_scored)
