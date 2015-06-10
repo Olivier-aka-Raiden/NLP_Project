@@ -102,8 +102,48 @@ class DblNegatives(object):
                         break
         new_sent = ' '.join(new_sent)
         print (new_sent+"\n")
+    #check if there is redundant use of "not"
+    def is_not_redundant(self, sent):
+        sent = word_tokenize(sent)
+        nb_not = 0
+        for word in sent:
+            if word.lower() == 'not' or word.lower() == 'n\'t':
+                nb_not = nb_not + 1
+        if nb_not == 2:
+            print ("This sentence use two times not.\n")
+            print ("The modified sentence is: ")
+            return True
+        return False
 
-
+    def correct_redundant_not(self, sent):
+        tokens = word_tokenize(sent)
+        tagged = nltk.pos_tag(tokens)
+        new_sent = []
+        #use tags to spot good words to change
+        for (word,tag) in tagged:
+            if len(word)>1:
+                if word == 'wo':
+                    word = 'will'
+                if word == 'ai':
+                    word = 'did'
+                    excp = 1
+                if word == 'Ai':
+                    word = ''
+                if word == 'ca':
+                    word = 'can'
+                if word == 'got' and excp == 1:
+                    word == 'get'
+                if word == 'n\'t':
+                    word = ''
+                elif word == 'not':
+                    word = ''
+                else:
+                    new_sent.append(word)   
+            else:
+                    new_sent.append(word)
+        new_sent = ' '.join(new_sent)
+        print (new_sent+"\n")
+        
     # check if it is a double negative sentence using bad grammar
     def is_bad_grammar_sentence(self, sent):
         sent = word_tokenize(sent)
@@ -150,6 +190,8 @@ class DblNegatives(object):
                 if word == 'ai':
                     word = 'didn\'t'
                     excp = 1
+                if word == 'Ai':
+                    word = ''
                 if word == 'ca':
                     word = 'can'
                 if word == 'got' and excp == 1:
@@ -164,7 +206,7 @@ class DblNegatives(object):
                     else:
                          new_sent.append (word)
                 else:
-                    new_sent.append(word)
+                    new_sent.append(word)   
             else:
                     new_sent.append(word)
         new_sent = ' '.join(new_sent)
@@ -181,6 +223,9 @@ class DblNegatives(object):
 
             elif self.is_negative_prefix_sentence(sentence):
                 self.correct_negative_prefix_sentence(sentence)
+
+            elif self.is_not_redundant(sentence):
+                self.correct_redundant_not(sentence)
 
             elif self.is_bad_grammar_sentence(sentence):
                 self.correct_bad_grammar_sentence(sentence)
